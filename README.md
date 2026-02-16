@@ -2,7 +2,9 @@
 
 > A bespoke Progressive Web App (PWA) designed to support a young person with epilepsy and additional needs to develop independence through task management, health monitoring, and real-time football integration — all wrapped in a gamified, football-themed interface.
 
-**Built by [Nicola / Your Studio Name]** | React + TypeScript + Vite | Google Sheets Cloud Backend
+**Built by [Nicola / Empower Digital Solutions]** | React + TypeScript + Vite | Google Sheets Cloud Backend
+
+<img width="2782" height="1529" alt="image" src="https://github.com/user-attachments/assets/334155ec-fb74-422d-a785-cf3feef56339" />
 
 ---
 
