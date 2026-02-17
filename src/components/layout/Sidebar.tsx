@@ -1,10 +1,10 @@
-import { Home, ClipboardList, Trophy, MapPin, Pill } from 'lucide-react';
+import { Home, ClipboardList, Trophy, Ticket, Pill } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 
 const navItems = [
     { icon: Home, label: 'Stadium', path: '/' },
     { icon: ClipboardList, label: 'Training', path: '/routine' },
-    { icon: MapPin, label: 'Away Days', path: '/travel' },
+    { icon: Ticket, label: 'My Club', path: '/club' },
     { icon: Pill, label: 'Meds', path: '/meds' },
     { icon: Trophy, label: 'Trophies', path: '/rewards' },
 ];

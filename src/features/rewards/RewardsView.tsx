@@ -7,8 +7,8 @@ export function RewardsView() {
 
     const rewards = [
         { id: 1, title: '1 Hour Gaming', cost: 10, icon: Gamepad2, color: 'bg-blue-500' },
-        { id: 2, title: 'Takeaway Night', cost: 50, icon: Star, color: 'bg-yellow-500' },
-        { id: 3, title: 'New Falkirk Kit', cost: 500, icon: Shirt, color: 'bg-falkirk-navy' },
+        { id: 2, title: 'Takeaway Night', cost: 500, icon: Star, color: 'bg-yellow-500' },
+        { id: 3, title: 'New Falkirk Kit', cost: 50000, icon: Shirt, color: 'bg-falkirk-navy' },
     ];
 
     return (
@@ -44,8 +44,8 @@ export function RewardsView() {
                             key={reward.id}
                             whileTap={canAfford ? { scale: 0.98 } : {}}
                             className={`p-4 rounded-xl border-2 flex items-center gap-4 transition-colors ${canAfford
-                                    ? 'bg-white border-gray-100 shadow-sm'
-                                    : 'bg-gray-50 border-gray-100 opacity-60 grayscale'
+                                ? 'bg-white border-gray-100 shadow-sm'
+                                : 'bg-gray-50 border-gray-100 opacity-60 grayscale'
                                 }`}
                         >
                             <div className={`w-12 h-12 rounded-full ${reward.color} flex items-center justify-center text-white shadow-sm`}>

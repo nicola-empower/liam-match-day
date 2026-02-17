@@ -5,6 +5,8 @@ import { motion } from 'framer-motion';
 import { useGameStore } from '../../store/useGameStore';
 import { RedCardWidget } from '../../components/health/RedCardWidget';
 import { FormGuideWidget, WeatherWidget, TeamTalkWidget } from '../../components/gamification/Widgets';
+import { LeagueTableWidget } from '../../components/gamification/LeagueTableWidget';
+import { CalendarWidget } from '../../components/gamification/CalendarWidget';
 import { getUpcomingMatches, getMatchDetails, type MatchDetails, type Match } from '../../services/footballApi';
 import { Shirt, Info, X, Cloud, CloudOff } from 'lucide-react';
 import { isSyncEnabled } from '../../services/syncService';
@@ -34,10 +36,15 @@ export function MatchDayView() {
         <div className="flex flex-col gap-8 pb-20 relative">
             {/* Header / Scoreboard */}
             <motion.header
-                className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100"
+                className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden"
                 initial={{ y: -20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
             >
+                {matches.some(m => m.isMock) && (
+                    <div className="absolute top-0 left-0 right-0 bg-yellow-100 text-yellow-800 text-xs font-bold px-4 py-1 text-center border-b border-yellow-200">
+                        ⚠️ DEMO MODE: REAL-TIME DATA UNAVAILABLE (API LIMIT REACHED)
+                    </div>
+                )}
                 <div className="flex justify-between items-center mb-6">
                     <div>
                         <h1 className="text-3xl font-bold text-falkirk-navy">Stadium Entrance</h1>
@@ -135,6 +142,12 @@ export function MatchDayView() {
 
             {/* Widgets Row */}
             <section className="grid grid-cols-2 gap-4">
+                <div className="col-span-2">
+                    <LeagueTableWidget />
+                </div>
+                <div className="col-span-2">
+                    <CalendarWidget />
+                </div>
                 <WeatherWidget />
                 <FormGuideWidget />
                 <div className="col-span-2">

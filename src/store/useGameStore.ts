@@ -24,13 +24,18 @@ interface GameState {
     seizureHistory: { date: string; count: number }[];
     logSeizure: (amount: number) => void;
     // Cloud sync
+    // Cloud sync
     calendarEvents: CalendarEvent[];
     lastSynced: string | null;
     isSyncing: boolean;
     syncFromCloud: () => Promise<void>;
+    // Gamification
+    trophies: number;
+    claimReward: () => void;
 }
 
 const INITIAL_TASKS: Task[] = [
+    // ... existing tasks ...
     // Morning Session
     { id: 'shower-morning', title: 'Morning Shower', points: 3, completed: false, category: 'hygiene', emoji: '🚿', colorClass: 'bg-falkirk-navy', timeOfDay: 'morning' },
     { id: 'teeth-morning', title: 'Brush Teeth', points: 2, completed: false, category: 'hygiene', emoji: '🪥', colorClass: 'bg-blue-500', timeOfDay: 'morning' },
@@ -62,6 +67,7 @@ export const useGameStore = create<GameState>()(
             calendarEvents: [],
             lastSynced: null,
             isSyncing: false,
+            trophies: 0,
 
             addPoints: (amount) => set((state) => ({ points: state.points + amount })),
 
@@ -119,6 +125,16 @@ export const useGameStore = create<GameState>()(
                     history: newHistory,
                     seizureHistory: newSeizureHistory
                 };
+            }),
+
+            claimReward: () => set((state) => {
+                if (state.points >= 20) {
+                    return {
+                        points: state.points - 20,
+                        trophies: state.trophies + 1
+                    };
+                }
+                return state;
             }),
 
             // Cloud sync: pull data from Google Sheet
@@ -186,6 +202,7 @@ export const useGameStore = create<GameState>()(
                 seizureHistory: state.seizureHistory,
                 calendarEvents: state.calendarEvents,
                 lastSynced: state.lastSynced,
+                trophies: state.trophies,
             }),
         }
     )

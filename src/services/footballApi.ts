@@ -10,10 +10,13 @@ export interface Match {
     status: 'SCHEDULED' | 'LIVE' | 'FINISHED' | 'POSTPONED';
     kickoffTime: string; // ISO string
     league: string;
+    isMock?: boolean;
 }
 
 const API_KEY = import.meta.env.VITE_API_FOOTBALL_KEY;
 const BASE_URL = 'https://v3.football.api-sports.io';
+const CACHE_PREFIX = 'football_api_';
+const CACHE_DURATION = 4 * 60 * 60 * 1000; // 4 hours in milliseconds
 
 // Team IDs (API-Football)
 const TEAMS = {
@@ -72,9 +75,40 @@ export interface MatchDetails extends Match {
     referee?: string;
 }
 
-// ... existing imports and consts
+// Helper: Get cached data
+const getCachedData = <T>(key: string): T | null => {
+    const cached = localStorage.getItem(CACHE_PREFIX + key);
+    if (!cached) return null;
+
+    try {
+        const { timestamp, data } = JSON.parse(cached);
+        if (Date.now() - timestamp < CACHE_DURATION) {
+            console.log(`[FootballAPI] Cache HIT for ${key}`);
+            return data;
+        } else {
+            console.log(`[FootballAPI] Cache EXPIRED for ${key}`);
+            localStorage.removeItem(CACHE_PREFIX + key);
+        }
+    } catch (e) {
+        console.warn(`[FootballAPI] Cache parse error for ${key}`, e);
+        localStorage.removeItem(CACHE_PREFIX + key);
+    }
+    return null;
+};
+
+// Helper: Set cached data
+const setCachedData = <T>(key: string, data: T) => {
+    localStorage.setItem(CACHE_PREFIX + key, JSON.stringify({
+        timestamp: Date.now(),
+        data
+    }));
+};
 
 export const getUpcomingMatches = async (): Promise<Match[]> => {
+    // Check cache first
+    const cached = getCachedData<Match[]>('upcoming_matches');
+    if (cached) return cached;
+
     if (!API_KEY) {
         console.warn('[FootballAPI] No API key found, using mock data.');
         return getMockMatches();
@@ -122,12 +156,22 @@ export const getUpcomingMatches = async (): Promise<Match[]> => {
         console.log(`[FootballAPI] Total unique fixtures: ${uniqueMatches.length}`);
 
         // If no future matches found, try getting recent results instead
+        let finalMatches = uniqueMatches;
         if (uniqueMatches.length === 0) {
             console.log('[FootballAPI] No upcoming matches, fetching recent results...');
-            return getRecentResults();
+            finalMatches = await getRecentResults();
         }
 
-        return uniqueMatches;
+        // If STILL no matches (e.g. API rate limit hit or error), use mock data
+        if (finalMatches.length === 0) {
+            console.warn('[FootballAPI] No data from API (likely rate limited), using mock data.');
+            finalMatches = getMockMatches();
+        }
+
+        // Cache the result
+        setCachedData('upcoming_matches', finalMatches);
+        return finalMatches;
+
     } catch (error) {
         console.error('[FootballAPI] Failed to fetch matches:', error);
         return getMockMatches();
@@ -136,6 +180,8 @@ export const getUpcomingMatches = async (): Promise<Match[]> => {
 
 // Fallback: get last 3 played matches per team
 const getRecentResults = async (): Promise<Match[]> => {
+    // We don't cache this separately as it's a fallback for getUpcomingMatches
+
     const today = new Date();
     const from = new Date(today);
     from.setDate(today.getDate() - 14);
@@ -165,13 +211,17 @@ const getRecentResults = async (): Promise<Match[]> => {
 const getMockMatches = (): Match[] => {
     const now = new Date();
     return [
-        { id: 1, homeTeam: 'Celtic', awayTeam: 'Rangers', homeScore: null, awayScore: null, status: 'SCHEDULED', kickoffTime: new Date(now.getTime() + 86400000).toISOString(), league: 'Scottish Premiership' },
-        { id: 2, homeTeam: 'Falkirk', awayTeam: 'Dunfermline', homeScore: null, awayScore: null, status: 'SCHEDULED', kickoffTime: new Date(now.getTime() + 172800000).toISOString(), league: 'Scottish Championship' },
-        { id: 3, homeTeam: 'Stenhousemuir', awayTeam: 'Peterhead', homeScore: null, awayScore: null, status: 'SCHEDULED', kickoffTime: new Date(now.getTime() + 259200000).toISOString(), league: 'League One' },
+        { id: 1, homeTeam: 'Celtic', awayTeam: 'Rangers', homeScore: null, awayScore: null, status: 'SCHEDULED', kickoffTime: new Date(now.getTime() + 86400000).toISOString(), league: 'Scottish Premiership', isMock: true },
+        { id: 2, homeTeam: 'Falkirk', awayTeam: 'Dunfermline', homeScore: null, awayScore: null, status: 'SCHEDULED', kickoffTime: new Date(now.getTime() + 172800000).toISOString(), league: 'Scottish Championship', isMock: true },
+        { id: 3, homeTeam: 'Stenhousemuir', awayTeam: 'Peterhead', homeScore: null, awayScore: null, status: 'SCHEDULED', kickoffTime: new Date(now.getTime() + 259200000).toISOString(), league: 'League One', isMock: true },
     ];
 };
 
 export const getMatchDetails = async (fixtureId: number): Promise<MatchDetails | null> => {
+    const cacheKey = `match_details_${fixtureId}`;
+    const cached = getCachedData<MatchDetails>(cacheKey);
+    if (cached) return cached;
+
     if (!API_KEY) return null;
 
     try {
@@ -190,7 +240,7 @@ export const getMatchDetails = async (fixtureId: number): Promise<MatchDetails |
             const fixture = data.response[0];
             const base = transformFixture(fixture);
 
-            return {
+            const details = {
                 ...base,
                 lineups: fixture.lineups?.map((l: any) => ({
                     team: l.team,
@@ -203,14 +253,16 @@ export const getMatchDetails = async (fixtureId: number): Promise<MatchDetails |
                 venue: fixture.fixture.venue,
                 referee: fixture.fixture.referee
             };
+
+            // Cache the details
+            setCachedData(cacheKey, details);
+            return details;
         }
     } catch (error) {
         console.error("Error fetching match details:", error);
     }
     return null;
 }
-
-// ... existing helper transformFixture
 
 // Helper: Transform API data to our App Model
 function transformFixture(f: ApiFixture): Match {

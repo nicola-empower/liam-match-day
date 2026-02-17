@@ -94,12 +94,22 @@ A PWA that lives on Liam's phone like a native app, featuring:
 | **Google Calendar** | Reads next 14 days of appointments from Liam's calendar |
 | **Carer Visibility** | Parents can view the Sheet in real-time to monitor progress |
 
-### Gamification Widgets 🎮
+### My Club & Digital Ticket 🎟️
 | Feature | Description |
 |---------|-------------|
+| **Digital Season Ticket** | Replica of Liam's Falkirk FC season ticket with real scannable QR code |
+| **Training Schedule** | Personalised schedule for Monday Night Football sessions |
+| **Identity Card** | Displays full membership details (Seat, Row, Stand) directly in-app |
+
+### Gamification & League Table 🏆
+| Feature | Description |
+|---------|-------------|
+| **League Table** | Tracks daily "wins" (days with >20 points) in a visual streak view |
+| **Trophy System** | Exchange points for digital trophies when daily targets are met |
+| **Trophy Cabinet** | Permanent record of all trophies won throughout the season |
+| **Manager's Team Talk** | Rotating motivational quotes in football manager style |
 | **Weather Widget** | Real-time local weather ("Pitch Conditions") via OpenWeatherMap |
 | **Form Guide** | Visual W/D/L streak indicator to track daily consistency |
-| **Manager's Team Talk** | Rotating motivational quotes in football manager style |
 
 ### Additional Features
 | Feature | Description |
@@ -122,6 +132,7 @@ A PWA that lives on Liam's phone like a native app, featuring:
 | **State Management** | Zustand (with localStorage persistence) |
 | **Animations** | Framer Motion |
 | **Icons** | Lucide React |
+| **QR Generation** | React QR Code |
 | **Backend** | Google Apps Script (serverless) |
 | **Database** | Google Sheets (via Apps Script Web App) |
 | **Calendar** | Google Calendar API (via Apps Script) |
@@ -305,7 +316,8 @@ This pricing reflects what a freelance developer or small studio in the UK would
 | Live Sports Integration | £1,700 | API setup + match centre |
 | Cloud Backend + Calendar | £1,660 | Google Sheets + Calendar sync |
 | Design System + Accessibility | £1,500 | Custom theme + a11y compliance |
-| **Total Portfolio Value** | **£9,500** | |
+| My Club & Loyalty System | £1,200 | Digital ticket, QR gen, league table |
+| **Total Portfolio Value** | **£10,700** | |
 
 > **Note:** This pricing is for a bespoke, one-off build. A productised version (SaaS) serving multiple families would be priced differently, with subscription models of £15–£30/month per family.
 
