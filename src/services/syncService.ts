@@ -91,6 +91,7 @@ export async function pushToSheet(state: AppState): Promise<boolean> {
             body: JSON.stringify({
                 action: 'syncAll',
                 data: {
+                    clientDate: new Date().toISOString().split('T')[0],
                     tasks: state.tasks,
                     points: state.points,
                     seizureHistory: state.seizureHistory,
@@ -156,4 +157,26 @@ export async function fetchCalendarEvents(): Promise<CalendarEvent[]> {
 
 export function isSyncEnabled(): boolean {
     return !!SYNC_URL;
+}
+
+export async function addDailyReminder(title: string, timeStr: string): Promise<boolean> {
+    if (!SYNC_URL) return false;
+
+    try {
+        const response = await fetch(SYNC_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify({
+                action: 'addRecurring',
+                title,
+                timeStr
+            }),
+        });
+
+        const result = await response.json();
+        return result.success;
+    } catch (error) {
+        console.error('[Sync] Failed to add reminder:', error);
+        return false;
+    }
 }

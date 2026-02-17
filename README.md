@@ -313,8 +313,8 @@ This pricing reflects what a freelance developer or small studio in the UK would
 
 ## 📄 Licence
 
-This project was built as a bespoke solution. All rights reserved.
-
+This project was built as a bespoke solution for my son. All rights reserved.
+Nicola Berry
 ---
 
 ## 🙏 Acknowledgements

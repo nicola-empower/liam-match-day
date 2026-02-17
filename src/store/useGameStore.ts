@@ -142,9 +142,9 @@ export const useGameStore = create<GameState>()(
                             if (cloudTaskMap.size > 0) {
                                 mergedTasks = currentState.tasks.map(task => ({
                                     ...task,
-                                    completed: cloudTaskMap.has(task.id)
-                                        ? Boolean(cloudTaskMap.get(task.id))
-                                        : task.completed
+                                    // True Wins: If either local OR cloud is true, consider it done.
+                                    // This prevents stale cloud data (false) from overwriting offline progress (true).
+                                    completed: task.completed || (cloudTaskMap.has(task.id) && Boolean(cloudTaskMap.get(task.id)))
                                 }));
                             }
                         }
@@ -194,10 +194,13 @@ export const useGameStore = create<GameState>()(
 // ========== AUTO SYNC ==========
 // Subscribe to state changes and push to sheet (debounced)
 useGameStore.subscribe((state) => {
-    debouncedPush({
-        tasks: state.tasks,
-        points: state.points,
-        seizureHistory: state.seizureHistory,
-        history: state.history,
-    });
+    // Don't push while we are pulling from cloud to avoid overwriting
+    if (!state.isSyncing) {
+        debouncedPush({
+            tasks: state.tasks,
+            points: state.points,
+            seizureHistory: state.seizureHistory,
+            history: state.history,
+        });
+    }
 });
