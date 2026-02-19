@@ -1,8 +1,8 @@
-# ⚽ Liam's Match Day — Gamified Independent Living App
+# ⚽ Liam's Match Day - Gamified Independent Living App
 
-> A bespoke Progressive Web App (PWA) designed to support a young person with epilepsy and additional needs to develop independence through task management, health monitoring, and real-time football integration — all wrapped in a gamified, football-themed interface.
+> A bespoke Progressive Web App (PWA) designed to support a young person with epilepsy and additional needs to develop independence through task management, health monitoring, and real-time football integration - all wrapped in a gamified, football-themed interface.
 
-**Built by [Nicola / Empower Digital Solutions]** | React + TypeScript + Vite | Google Sheets Cloud Backend
+**Built by Nicola Berry | Empower Digital Solutions** | React + TypeScript + Vite | Google Sheets Cloud Backend
 
 <img width="2782" height="1529" alt="image" src="https://github.com/user-attachments/assets/334155ec-fb74-422d-a785-cf3feef56339" />
 
@@ -26,7 +26,7 @@
 
 ## 🎯 Overview
 
-**Liam's Match Day** transforms daily household tasks, medication reminders, and health tracking into a football-themed game. Instead of a boring checklist, Liam earns points like a football player earns performance stats — completing tasks moves him closer to unlocking PlayStation credits (his "contract bonus").
+**Liam's Match Day** transforms daily household tasks, medication reminders, and health tracking into a football-themed game. Instead of a boring checklist, Liam earns points like a football player earns performance stats - completing tasks moves him closer to unlocking PlayStation credits (his "contract bonus").
 
 The app is designed with a **"left-hand first"** interface philosophy, with large touch targets and simplified interactions suitable for users with motor coordination challenges.
 
@@ -35,11 +35,11 @@ The app is designed with a **"left-hand first"** interface philosophy, with larg
 ## 🔴 The Problem
 
 Young people with epilepsy and learning difficulties often struggle with:
-- **Routine adherence** — forgetting medication, hygiene tasks, and household chores
-- **Motivation** — traditional task lists feel like work, not engagement
-- **Health tracking** — seizure logging is often paper-based and inconsistent
-- **Appointment management** — missing GP visits, specialist appointments, and social activities
-- **Carer visibility** — parents/carers have no real-time insight into daily progress
+- **Routine adherence** - forgetting medication, hygiene tasks, and household chores
+- **Motivation** - traditional task lists feel like work, not engagement
+- **Health tracking** - seizure logging is often paper-based and inconsistent
+- **Appointment management** - missing GP visits, specialist appointments, and social activities
+- **Carer visibility** - parents/carers have no real-time insight into daily progress
 
 ---
 
@@ -60,14 +60,14 @@ A PWA that lives on Liam's phone like a native app, featuring:
 ### Core Task Management
 | Feature | Description |
 |---------|-------------|
-| **Hero Button Cards** | Large, colourful task cards with emojis — designed for easy tapping |
+| **Hero Button Cards** | Large, colourful task cards with emojis - designed for easy tapping |
 | **Morning / Evening / Anytime** | Tasks grouped by time of day with clear visual separation |
 | **Undo Button** | Every completed task has an undo arrow in case of accidental taps |
 | **Points System** | Each task earns points (2–20 pts), tracked across sessions |
-| **PlayStation Contract** | Visual progress tracker — complete enough tasks to earn PlayStation credits |
+| **PlayStation Contract** | Visual progress tracker - complete enough tasks to earn PlayStation credits |
 | **Pitch Progress Bar** | Animated football pitch showing overall daily completion |
 
-### Health Monitoring — "Red Card Report" 🟥
+### Health Monitoring - "Red Card Report" 🟥
 | Feature | Description |
 |---------|-------------|
 | **Seizure Logger** | Simple +/- buttons to log seizures throughout the day |
@@ -179,7 +179,7 @@ A PWA that lives on Liam's phone like a native app, featuring:
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/liam-match-day.git
+git clone https://github.com/nicola-empower/liam-match-day.git
 cd liam-match-day
 
 # Install dependencies
@@ -215,11 +215,11 @@ npm run preview
 
 ### Sheet Structure
 The script auto-creates 5 tabs:
-- **DailyTasks** — Today's task completion status
-- **SeizureLog** — Daily seizure counts with date history
-- **PointsHistory** — Score archive for form guide
-- **CalendarEvents** — Upcoming appointments from Google Calendar
-- **Config** — Sync metadata and app version
+- **DailyTasks** - Today's task completion status
+- **SeizureLog** - Daily seizure counts with date history
+- **PointsHistory** - Score archive for form guide
+- **CalendarEvents** - Upcoming appointments from Google Calendar
+- **Config** - Sync metadata and app version
 
 ---
 
@@ -247,11 +247,11 @@ VITE_SYNC_URL=https://script.google.com/macros/s/your-deployment-id/exec
 > *"My son Liam has epilepsy and additional needs. He's trying to live more independently but struggles with routine, medication, and household tasks. He loves Celtic and Falkirk. Can you make something that helps him without feeling like a chore?"*
 
 ### Approach
-1. **Discovery** — Understanding Liam's daily routine, triggers, interests, and abilities
-2. **Design Philosophy** — "Left-hand first" interface with large touch targets, high contrast, and minimal cognitive load
-3. **Gamification Strategy** — Tasks reframed as match-day rituals; points as performance stats; PlayStation credits as contract bonuses
-4. **Health Integration** — Seizure monitoring built directly into the dashboard for immediate access
-5. **Carer Visibility** — Google Sheets backend allows parents to monitor progress in real-time without intrusive surveillance
+1. **Discovery** - Understanding Liam's daily routine, triggers, interests, and abilities
+2. **Design Philosophy** - "Left-hand first" interface with large touch targets, high contrast, and minimal cognitive load
+3. **Gamification Strategy** - Tasks reframed as match-day rituals; points as performance stats; PlayStation credits as contract bonuses
+4. **Health Integration** - Seizure monitoring built directly into the dashboard for immediate access
+5. **Carer Visibility** - Google Sheets backend allows parents to monitor progress in real-time without intrusive surveillance
 
 ### Outcomes
 - ✅ Tasks completed consistently through gamified motivation
@@ -325,7 +325,9 @@ This pricing reflects what a freelance developer or small studio in the UK would
 
 ## 📄 Licence
 
-This project was built as a bespoke solution for my son. All rights reserved.
+This project was built as a bespoke solution for my son.
+All rights reserved.
+
 Nicola Berry
 ---
 
